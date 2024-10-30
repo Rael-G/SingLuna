@@ -6,18 +6,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace SingLuna.Core;
 
-public class BotService : IHostedService
+public class BotService(DiscordSocketClient client, CommandService commands, IServiceProvider services) 
+    : IHostedService
 {
-    private readonly DiscordSocketClient _client;
-    private readonly CommandService _commands;
-    private readonly IServiceProvider _services;
-
-    public BotService(DiscordSocketClient client, CommandService commands, IServiceProvider services)
-    {
-        _client = client;
-        _commands = commands;
-        _services = services;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly CommandService _commands = commands;
+    private readonly IServiceProvider _services = services;
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
