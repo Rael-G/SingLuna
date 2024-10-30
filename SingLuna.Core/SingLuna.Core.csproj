@@ -13,6 +13,7 @@
     <PackageReference Include="Discord.Net.Commands" Version="3.16.0" />
     <PackageReference Include="FFmpeg.Static" Version="4.4.0.7" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Opus" Version="1.0.0" />
     <PackageReference Include="YoutubeExplode" Version="6.4.3" />
     <PackageReference Include="YoutubeExplode.Converter" Version="6.4.3" />
