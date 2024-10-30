@@ -1,30 +1,58 @@
-using CliWrap;
+using System.Collections.Concurrent;
 using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 
 namespace SingLuna.Core;
 
 public class CommandsModule : ModuleBase<SocketCommandContext>
 {
+    private static ConcurrentDictionary<SocketGuild, Playlist> Guilds = [];
+
     [Command("play", RunMode = RunMode.Async)]
-    [Summary("Play")]
+    [Summary("Search and play a music.")]
     public async Task PlayAsync([Remainder] string query)
     {
-        var voiceChannel = (Context.User as IVoiceState)?.VoiceChannel;
-        if (voiceChannel == null)
+        if (!Guilds.TryGetValue(Context.Guild, out var playlist))
         {
-            await ReplyAsync("You need to be in a voice channel");
-            return;
+            var channel = (Context.User as IVoiceState)?.VoiceChannel;
+            if (channel == null)
+            {
+                await ReplyAsync("You need to be in a voice channel");
+                return;
+            }
+            var audioClient = await channel.ConnectAsync();
+            playlist = new Playlist(audioClient);
+            Guilds[Context.Guild] = playlist;
         }
 
         var video = await AudioService.SearchYouTube(query);
-
+        var music = new Music(video);
+        
         await ReplyAsync($"Playing {video.Title}");
+        await playlist.Add(music);
+    }
 
-        var audioStream = await AudioService.DownloadAudioAsync(video.Url);
+    [Command("skip", RunMode = RunMode.Async)]
+    [Summary("Skip the current music.")]
+    public async Task SkipAsync()
+    {
+        if (Guilds.TryGetValue(Context.Guild, out var playlist))
+        {
+            await playlist.Skip();
+        }
+    }
 
-        var audioClient = await voiceChannel.ConnectAsync();
+    [Command("stop", RunMode = RunMode.Async)]
+    [Summary("Stop the Player.")]
+    public Task StopAsync()
+    {
+        if (Guilds.TryGetValue(Context.Guild, out var playlist))
+        {
+            playlist.Stop();
+            Guilds.TryRemove(Context.Guild, out _);
+        }
 
-        await AudioService.SendAudioAsync(audioClient, audioStream);
+        return Task.CompletedTask;
     }
 }
