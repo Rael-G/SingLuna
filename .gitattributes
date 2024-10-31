@@ -1,0 +1,2 @@
+SingLuna.Dependency/linux/ffmpeg filter=lfs diff=lfs merge=lfs -text
+SingLuna.Dependency/win/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text

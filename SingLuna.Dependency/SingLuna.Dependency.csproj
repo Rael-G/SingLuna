@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <SourcePath>linux</SourcePath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <SourcePath>win</SourcePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content 
+      Include="$(SourcePath)\*.*"
+      CopyToOutputDirectory="PreserveNewest"
+      TargetPath="ffmpeg\%(Filename)%(Extension)"
+      >
+    </Content>
+</ItemGroup>
+
+</Project>

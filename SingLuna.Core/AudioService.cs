@@ -20,7 +20,7 @@ internal static class AudioService
     {
         var streamManifest = await _youtubeClient.Videos.Streams.GetManifestAsync(url, cancellationToken);
         var audioStreamInfo = streamManifest.GetAudioOnlyStreams().First();
-        var ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg", "ffmpeg.exe");
+        var ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg", "ffmpeg");
         var videoPath = Path.GetTempFileName();
         
         await _youtubeClient.Videos.DownloadAsync(
@@ -42,15 +42,12 @@ internal static class AudioService
 
         try
         {
-            // Abre o áudio com NAudio e configura o volume
             using var waveReader = new WaveFileReader(audioStream);
             var volumeProvider = new VolumeWaveProvider16(waveReader) { Volume = Math.Clamp(volume, 0f, 1f) };
             
-            // Configura buffer de áudio
             byte[] buffer = new byte[8192];
             int bytesRead;
 
-            // Lê o áudio, ajusta o volume e envia ao Discord
             while ((bytesRead = volumeProvider.Read(buffer, 0, buffer.Length)) > 0)
             {
                 await discordStream.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationToken);
