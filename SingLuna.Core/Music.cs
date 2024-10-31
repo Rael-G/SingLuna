@@ -5,20 +5,26 @@ namespace SingLuna.Core;
 
 public class Music(VideoSearchResult video)
 {
+    private const float DefaultVolume = 0.5f;
     public VideoSearchResult Video { get; set; } = video;
 
     private readonly CancellationTokenSource _cancellationToken = new();
 
     public async Task Play(IAudioClient client, Action musicEnded)
     {
+        string audioPath = string.Empty;
         try
         {
-            var audioStream = await AudioService.DownloadAudioAsync(Video.Url, _cancellationToken.Token);
-            await AudioService.SendAudioAsync(client, audioStream, _cancellationToken.Token);
+            audioPath = await AudioService.DownloadAudioAsync(Video.Url, _cancellationToken.Token);
+            using var audioStream = new FileStream(audioPath, FileMode.Open);
+            await AudioService.SendAudioAsync(client, audioStream, DefaultVolume, _cancellationToken.Token);
         }
-        catch(OperationCanceledException e)
+        finally
         {
-            Console.WriteLine(e.Message);
+            if (File.Exists(audioPath))
+            {
+                File.Delete(audioPath);
+            }
         }
 
         musicEnded();
