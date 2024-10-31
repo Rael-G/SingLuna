@@ -7,16 +7,25 @@ public class Music(VideoSearchResult video)
 {
     public VideoSearchResult Video { get; set; } = video;
 
-    private readonly CancellationTokenSource _cancelationToken = new();
+    private readonly CancellationTokenSource _cancellationToken = new();
 
-    public async Task Play(IAudioClient client)
+    public async Task Play(IAudioClient client, Action musicEnded)
     {
-        var audioStream = await AudioService.DownloadAudioAsync(Video.Url, _cancelationToken.Token);
-        await AudioService.SendAudioAsync(client, audioStream, _cancelationToken.Token);
+        try
+        {
+            var audioStream = await AudioService.DownloadAudioAsync(Video.Url, _cancellationToken.Token);
+            await AudioService.SendAudioAsync(client, audioStream, _cancellationToken.Token);
+        }
+        catch(OperationCanceledException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        musicEnded();
     }
 
     public void Stop()
     {
-        _cancelationToken.Cancel();
+        _cancellationToken.Cancel();
     }
 }

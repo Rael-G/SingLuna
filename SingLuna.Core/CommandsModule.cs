@@ -22,14 +22,13 @@ public class CommandsModule : ModuleBase<SocketCommandContext>
                 return;
             }
             var audioClient = await channel.ConnectAsync();
-            playlist = new Playlist(audioClient);
+            playlist = new Playlist(audioClient, (ITextChannel)Context.Channel, Context.Guild, OnPlaylistEnd);
             Guilds[Context.Guild] = playlist;
         }
 
         var video = await AudioService.SearchYouTube(query);
         var music = new Music(video);
         
-        await ReplyAsync($"Playing {video.Title}");
         await playlist.Add(music);
     }
 
@@ -45,14 +44,20 @@ public class CommandsModule : ModuleBase<SocketCommandContext>
 
     [Command("stop", RunMode = RunMode.Async)]
     [Summary("Stop the Player.")]
-    public Task StopAsync()
+    public async Task StopAsync()
     {
         if (Guilds.TryGetValue(Context.Guild, out var playlist))
         {
-            playlist.Stop();
+            await playlist.Stop();
             Guilds.TryRemove(Context.Guild, out _);
         }
+    }
 
-        return Task.CompletedTask;
+    public void OnPlaylistEnd(SocketGuild guild)
+    {
+        if (Guilds.TryGetValue(Context.Guild, out _))
+        {
+            Guilds.TryRemove(Context.Guild, out _);
+        }
     }
 }
