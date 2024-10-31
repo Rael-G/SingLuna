@@ -6,18 +6,28 @@
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
     <SourcePath>linux</SourcePath>
+    <NativePre>lib</NativePre>
+    <NativeExt></NativeExt>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
     <SourcePath>win</SourcePath>
+    <NativePre></NativePre>
+    <NativeExt>.exe</NativeExt>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content 
-      Include="$(SourcePath)\*.*"
-      CopyToOutputDirectory="PreserveNewest"
-      TargetPath="ffmpeg\%(Filename)%(Extension)"
-      >
+    <Content Include="$(SourcePath)\ffmpeg\ffmpeg$(NativeExt)" CopyToOutputDirectory="PreserveNewest" TargetPath="\ffmpeg\%(Filename)%(Extension)">
+    </Content>
+</ItemGroup>
+
+<ItemGroup>
+    <Content Include="$(SourcePath)\opus\$(NativePre)opus.*" CopyToOutputDirectory="PreserveNewest" TargetPath="%(Filename)%(Extension)">
+    </Content>
+</ItemGroup>
+
+<ItemGroup>
+    <Content Include="$(SourcePath)\libsodium\libsodium.*" CopyToOutputDirectory="PreserveNewest" TargetPath="%(Filename)%(Extension)">
     </Content>
 </ItemGroup>
 
