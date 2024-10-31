@@ -54,8 +54,6 @@ public class Playlist(IAudioClient client, ITextChannel channel, SocketGuild gui
         await ReplyAsync("Stopping");
         _actual?.Stop();
         try { await _client.StopAsync(); }
-        catch(OperationCanceledException e)
-        { Console.WriteLine(e.Message); }
         finally
         { PlaylistEnded(_guild); }
     }
