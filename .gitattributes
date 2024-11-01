@@ -1,6 +1,0 @@
-SingLuna.Dependency/linux/ffmpeg/ffmpeg filter=lfs diff=lfs merge=lfs -text
-SingLuna.Dependency/win/ffmpeg/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text
-SingLuna.Dependency/linux/opus/libopus.so filter=lfs diff=lfs merge=lfs -text
-SingLuna.Dependency/win/opus/opus.dll filter=lfs diff=lfs merge=lfs -text
-SingLuna.Dependency/linux/libsodium/libsodium.so filter=lfs diff=lfs merge=lfs -text
-SingLuna.Dependency/win/libsodium/libsodium.dll filter=lfs diff=lfs merge=lfs -text
