@@ -2,8 +2,8 @@ services:
 
   singluna:
     build:
-      context: .
-      dockerfile: SingLuna.Core/Dockerfile
+      context: SingLuna.Core
+      dockerfile: Dockerfile
     environment:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
     restart: always

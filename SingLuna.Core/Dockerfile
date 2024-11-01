@@ -7,13 +7,13 @@ RUN apt-get update && \
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["SingLuna.Core/SingLuna.Core.csproj", "SingLuna.Core/"]
+COPY ["SingLuna.Core.csproj", "./"]
 
-RUN dotnet restore "SingLuna.Core/SingLuna.Core.csproj"
+RUN dotnet restore "SingLuna.Core.csproj"
 
 COPY . .
 
-WORKDIR "/src/SingLuna.Core"
+WORKDIR "/src"
 
 RUN dotnet build "SingLuna.Core.csproj" -c Release -o /app/build
 
