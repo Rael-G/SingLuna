@@ -19,15 +19,16 @@ public class Music(VideoSearchResult video)
             using var audioStream = new FileStream(audioPath, FileMode.Open);
             await AudioService.SendAudioAsync(client, audioStream, DefaultVolume, _cancellationToken.Token);
         }
+        catch(OperationCanceledException) { }
         finally
         {
             if (File.Exists(audioPath))
             {
                 File.Delete(audioPath);
             }
+            musicEnded();
         }
 
-        musicEnded();
     }
 
     public void Stop()

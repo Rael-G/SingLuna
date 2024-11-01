@@ -10,7 +10,7 @@ internal static class AudioService
 {
     private static readonly YoutubeClient _youtubeClient = new();
 
-    public static async Task<VideoSearchResult> SearchYouTube(string query, CancellationToken cancellationToken = default)
+    public static async Task<VideoSearchResult> SearchYouTubeAsync(string query, CancellationToken cancellationToken = default)
     {
         var videos = _youtubeClient.Search.GetVideosAsync(query, cancellationToken);
         return await videos.FirstAsync(cancellationToken);

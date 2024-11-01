@@ -51,7 +51,7 @@ public class Playlist(IAudioClient client, ITextChannel channel, SocketGuild gui
 
     public async Task Stop()
     {
-        await ReplyAsync("Stopping");
+        await ReplyAsync("See ya");
         _actual?.Stop();
         try { await _client.StopAsync(); }
         finally

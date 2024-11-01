@@ -19,7 +19,7 @@ public class BotService(DiscordSocketClient client, CommandService commands, ISe
         _client.Ready += ReadyAsync;
         _client.MessageReceived += HandleCommandAsync;
 
-        var token = Environment.GetEnvironmentVariable("DISCORD_API_TOKEN") ??
+        var token = Environment.GetEnvironmentVariable("DISCORD_TOKEN") ??
                     throw new NullReferenceException("The Discord API token environment variable is not defined.");
 
         await _client.LoginAsync(TokenType.Bot, token);

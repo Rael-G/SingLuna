@@ -26,7 +26,7 @@ public class CommandsModule : ModuleBase<SocketCommandContext>
             Guilds[Context.Guild] = playlist;
         }
 
-        var video = await AudioService.SearchYouTube(query);
+        var video = await AudioService.SearchYouTubeAsync(query);
         var music = new Music(video);
         
         await playlist.Add(music);
