@@ -5,24 +5,18 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingLuna.Core", "SingLuna.Core\SingLuna.Core.csproj", "{D3DE6C81-3AB3-4E92-811B-58020345D17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingLuna.Dependency", "SingLuna.Dependency\SingLuna.Dependency.csproj", "{5B562C0F-9964-4DDF-9E05-AF9A9827E9B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D3DE6C81-3AB3-4E92-811B-58020345D17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3DE6C81-3AB3-4E92-811B-58020345D17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3DE6C81-3AB3-4E92-811B-58020345D17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3DE6C81-3AB3-4E92-811B-58020345D17E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B562C0F-9964-4DDF-9E05-AF9A9827E9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B562C0F-9964-4DDF-9E05-AF9A9827E9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B562C0F-9964-4DDF-9E05-AF9A9827E9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B562C0F-9964-4DDF-9E05-AF9A9827E9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

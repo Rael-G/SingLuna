@@ -17,8 +17,4 @@
     <PackageReference Include="YoutubeExplode.Converter" Version="6.4.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SingLuna.Dependency\SingLuna.Dependency.csproj" />
-  </ItemGroup>
-
 </Project>

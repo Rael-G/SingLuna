@@ -20,15 +20,13 @@ internal static class AudioService
     {
         var streamManifest = await _youtubeClient.Videos.Streams.GetManifestAsync(url, cancellationToken);
         var audioStreamInfo = streamManifest.GetAudioOnlyStreams().First();
-        var ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg", "ffmpeg");
         var videoPath = Path.GetTempFileName();
         
         await _youtubeClient.Videos.DownloadAsync(
             url,
             videoPath,
             o => o.SetContainer("wav")
-                .SetPreset(ConversionPreset.UltraFast)
-                .SetFFmpegPath(ffmpegPath),
+                .SetPreset(ConversionPreset.UltraFast),
             null,
             cancellationToken
         );
